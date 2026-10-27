@@ -12,7 +12,7 @@ export const business = {
   tiktok: null as string | null,
 };
 
-export const siteUrl = `https://${business.domain}`;
+export const siteUrl = `https://www.${business.domain}`;
 
 export type Lang = "ar" | "en";
 export type Localized = { ar: string; en: string };
