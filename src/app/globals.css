@@ -1,0 +1,557 @@
+@import "tailwindcss";
+
+/* ---------- Design tokens (see DESIGN.md) ---------- */
+@theme {
+  --color-forest: #3a473e;
+  --color-forest-deep: #2c3730;
+  --color-forest-ink: #202823;
+  --color-sage: #d6d8b0;
+  --color-sage-soft: #e7e8cf;
+  --color-stone: #e9e1d2;
+  --color-stone-deep: #ddd2bf;
+  --color-wa: #1f7a4d;
+
+  --font-ar: var(--font-arabic), var(--font-latin), Tahoma, sans-serif;
+  --font-lat: var(--font-latin), var(--font-arabic), "Helvetica Neue", Arial, sans-serif;
+
+  --ease-brand: cubic-bezier(0.16, 1, 0.3, 1);
+  --breakpoint-xs: 380px;
+}
+
+@layer components {
+:root {
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur: 0.7s;
+  --gutter: clamp(20px, 5vw, 72px);
+  --header-h: 72px;
+  color-scheme: light;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  background: var(--color-forest);
+}
+
+html[lang="ar"] body {
+  font-family: var(--font-ar);
+}
+html[lang="en"] body {
+  font-family: var(--font-lat);
+}
+
+body {
+  background: var(--color-forest);
+  color: var(--color-sage);
+  overflow-x: clip;
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+::selection {
+  background: var(--color-sage);
+  color: var(--color-forest-ink);
+}
+
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Latin runs (numbers, phone, SULAF) stay LTR inside Arabic */
+.ltr {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.font-display {
+  font-family: var(--font-ar);
+  font-weight: 800;
+}
+html[lang="en"] .font-display {
+  font-family: var(--font-lat);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+}
+
+/* Tracked Latin caps, echoing the KOMBUCHA wordmark */
+.caps {
+  font-family: var(--font-lat);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+}
+html[lang="ar"] .eyebrow {
+  font-family: var(--font-ar);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+html[lang="en"] .eyebrow {
+  font-family: var(--font-lat);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+}
+
+/* Arch shape: the brand's key form */
+.arch {
+  border-radius: 999px 999px 0 0;
+}
+.arch-soft {
+  border-radius: 999px 999px 24px 24px;
+}
+
+/* Hidden-until-revealed elements (only when JS + motion are on) */
+.js-motion [data-reveal] {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Preloader (pure CSS so it never blocks) ---------- */
+.preloader {
+  animation: preloader-out 0.7s var(--ease) 1.05s forwards;
+}
+.preloader-arch path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 0.9s var(--ease) 0.1s forwards;
+}
+.preloader-mark {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: rise 0.7s var(--ease) 0.4s forwards;
+}
+.preloader-seen .preloader {
+  display: none;
+}
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes rise {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes preloader-out {
+  to {
+    clip-path: inset(0 0 100% 0);
+    visibility: hidden;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .preloader {
+    display: none;
+  }
+}
+
+/* Floating bottle idle drift */
+@keyframes drift {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.drift {
+  animation: drift 6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .drift {
+    animation: none;
+  }
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ---------- Flavor journey ----------
+   Without motion (reduced motion / no JS): panels stack as normal sections,
+   each with its own bottle. With motion (.js-motion): one pinned stage,
+   panels stacked and wiped in, one shared bottle that spins between labels. */
+.jp-panel {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: calc(var(--header-h) + 24px) var(--gutter) 40px;
+}
+.jp-word {
+  display: block;
+  height: 1em;
+  line-height: 1;
+  left: 50%;
+  inset-inline-start: auto;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+.jp-word-ar {
+  font-size: clamp(150px, 44vw, 440px);
+}
+.jp-word-en {
+  font-size: clamp(104px, 25vw, 380px);
+  letter-spacing: -0.02em;
+}
+@media (min-width: 768px) {
+  .jp-word-ar {
+    font-size: clamp(200px, 30vw, 520px);
+  }
+}
+.jp-text {
+  position: relative;
+  z-index: 2;
+}
+.jp-actions {
+  position: relative;
+  z-index: 7;
+  margin-top: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+.jp-static-bottle {
+  position: relative;
+  z-index: 1;
+  height: 58svh;
+  margin: 32px auto 0;
+  display: flex;
+  justify-content: center;
+}
+.jp-shared,
+.jp-side {
+  display: none;
+}
+
+.jp-stage {
+  position: relative;
+}
+/* 1 screen for the hero + 0.8 screen of scroll per flavor */
+.js-motion .journey {
+  height: calc(100svh + 5 * 80svh);
+}
+.js-motion .jp-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+.js-motion [data-art]:not(:first-of-type) {
+  opacity: 0;
+  visibility: hidden;
+}
+.js-motion .jp-panel {
+  position: absolute;
+  inset: 0;
+  min-height: 0;
+  padding: 0;
+  display: block;
+}
+.js-motion .jp-text {
+  position: absolute;
+  top: calc(var(--header-h) + 8px);
+  inset-inline: var(--gutter);
+}
+.js-motion .jp-actions {
+  position: absolute;
+  margin: 0;
+  bottom: max(28px, env(safe-area-inset-bottom));
+  inset-inline: var(--gutter);
+}
+.js-motion .jp-static-bottle {
+  display: none;
+}
+.js-motion .jp-shared {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  perspective: 1600px;
+}
+.jp-bottle-pos {
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  height: 47svh;
+  aspect-ratio: 0.31;
+  transform: translate(-50%, -50%) rotate(var(--tilt));
+}
+.jp-shadow {
+  position: absolute;
+  inset: 8% 16% 0 16%;
+  border-radius: 40%;
+  background: rgba(10, 14, 12, 0.42);
+  filter: blur(20px);
+  transform: translate(22px, 26px);
+}
+[dir="rtl"] .jp-shadow {
+  transform: translate(-22px, 26px);
+}
+/* Panels not on screen skip paint until their wipe starts. */
+.js-motion .jp-panel:not(.jp-panel-0) {
+  content-visibility: hidden;
+  clip-path: inset(100% 0 0 0);
+}
+.js-motion .jp-panel [data-anim] {
+  opacity: 0;
+}
+.js-motion .jp-panel-0 [data-anim] {
+  opacity: 1;
+}
+
+/* ---------- Benefits: bottle in an arch, six callouts on drawn lines ---------- */
+.bn-stage {
+  padding-block: 96px 72px;
+}
+.bn-board {
+  display: none;
+}
+.bn-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+.bn-spine {
+  transform-origin: top;
+}
+.bn-stack li:last-child .bn-spine {
+  bottom: auto;
+  height: 36px;
+}
+@media (min-width: 1100px) {
+  .bn-stack {
+    display: none;
+  }
+  .bn-board {
+    display: block;
+    position: relative;
+    margin: 32px auto 0;
+    width: min(1240px, calc(100vw - 2 * var(--gutter)), calc((100svh - 300px) * 2));
+    max-width: 100%;
+    aspect-ratio: 2 / 1;
+  }
+  .bn-board-bottle {
+    position: absolute;
+    left: 50%;
+    top: 9%;
+    height: 88%;
+    aspect-ratio: 0.31;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+  }
+  .bn-call {
+    position: absolute;
+    width: 30%;
+    transform: translateY(-50%);
+  }
+  /* With motion: the section is tall and the stage stays on screen while it plays. */
+  .js-motion .bn {
+    height: 340svh;
+  }
+  .js-motion .bn-stage {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    padding-block: calc(var(--header-h) + 12px) 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .js-motion .bn-line {
+    stroke-dashoffset: 1;
+  }
+  .js-motion .bn-dot {
+    opacity: 0;
+  }
+  .js-motion .bn-call {
+    opacity: 0;
+  }
+}
+
+/* Ingredient marks around the bottle: line drawings that draw themselves in, then float. */
+.ing-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.ing {
+  position: absolute;
+  margin: 0;
+  width: 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.ing-0 {
+  inset-inline-start: 5%;
+  top: 40%;
+}
+.ing-1 {
+  inset-inline-start: 74%;
+  top: 73%;
+}
+.ing-art {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.ing-float {
+  display: block;
+  width: 100%;
+  animation: drift 6s ease-in-out infinite;
+}
+.ing-1 .ing-float {
+  animation-delay: -3s;
+}
+.ing-cap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.ing-rule {
+  width: 1px;
+  height: 14px;
+  background: currentColor;
+  opacity: 0.6;
+}
+.js-motion .ing-art [pathLength] {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.6s var(--ease) 0.35s;
+}
+.js-motion .ing-1 .ing-art [pathLength] {
+  transition-delay: 0.6s;
+}
+.js-motion .ing-cap {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--dur) var(--ease) 0.9s, transform var(--dur) var(--ease) 0.9s;
+}
+.js-motion .is-on .ing-art [pathLength] {
+  stroke-dashoffset: 0;
+}
+.js-motion .is-on .ing-cap {
+  opacity: 1;
+  transform: none;
+}
+/* Without motion the marks sit beside the stacked bottle. */
+html:not(.js-motion) .ing-0 {
+  top: 52%;
+}
+html:not(.js-motion) .ing-1 {
+  top: 78%;
+}
+
+@media (min-width: 768px) {
+  .ing {
+    width: 112px;
+  }
+  .ing-cap {
+    font-size: 13px;
+  }
+  .ing-0 {
+    inset-inline-start: 45%;
+    top: 11%;
+  }
+  .ing-1 {
+    inset-inline-start: 72%;
+    top: 63%;
+  }
+  /* Flavor text sits at one fixed height on every panel. */
+  .js-motion .jp-text.jp-flavor-text {
+    top: 24%;
+    transform: none;
+  }
+}
+@media (min-width: 768px) and (max-width: 1100px) {
+  .ing-0 {
+    inset-inline-start: 60%;
+    top: 12%;
+  }
+  .ing-1 {
+    inset-inline-start: 84%;
+    top: 70%;
+  }
+}
+
+@media (min-width: 768px) {
+  .jp-panel {
+    padding-top: calc(var(--header-h) + 64px);
+  }
+  .js-motion .jp-text {
+    top: 50%;
+    transform: translateY(-50%);
+    inset-inline-end: auto;
+    width: min(40vw, 600px);
+  }
+  .jp-bottle-pos {
+    top: 53%;
+    height: 78svh;
+    left: 57%;
+  }
+  [dir="rtl"] .jp-bottle-pos {
+    left: 43%;
+  }
+  .js-motion .jp-side {
+    display: block;
+    position: absolute;
+    z-index: 8;
+    inset-inline-end: var(--gutter);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ink);
+  }
+}
+@media (min-width: 768px) and (max-width: 1100px) {
+  .js-motion .jp-side {
+    display: none;
+  }
+  .js-motion .jp-text {
+    width: 46vw;
+  }
+  .jp-bottle-pos {
+    left: 74%;
+    height: 62svh;
+  }
+  [dir="rtl"] .jp-bottle-pos {
+    left: 26%;
+  }
+}
+
+}

@@ -1,0 +1,9 @@
+node_modules
+.next
+out
+*.tsbuildinfo
+next-env.d.ts
+.next-preview
+# Unlicensed for redistribution: keep out of the repository
+assets/fonts/
+screenshots/*.mp4
