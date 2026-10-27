@@ -5,7 +5,7 @@ export const business = {
   vat: "310173271100003",
   cr: "7002315484",
   year: 2026,
-  domain: "sulaf.co",
+  domain: "sulav.co",
   /** [TBD: Instagram handle] */
   instagram: null as string | null,
   /** [TBD: TikTok handle] */

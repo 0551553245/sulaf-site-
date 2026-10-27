@@ -35,6 +35,6 @@ Alexandria for Arabic and English (SIL Open Font License, free for web use), def
 Set `instagram` / `tiktok` in `src/content/site.ts` (handle without `@`). Until then the footer shows `[TBD]`.
 
 ## Deploy
-Vercel, domain `sulaf.co`.
+Vercel, domain `sulav.co`.
 1. In Vercel: **Add New → Project → Import** this GitHub repository. Framework: Next.js (detected). No environment variables needed.
-2. **Settings → Domains → Add** `sulaf.co` and `www.sulaf.co`, then add the DNS records Vercel shows at your domain registrar.
+2. **Settings → Domains → Add** `sulav.co` and `www.sulav.co`, then add the DNS records Vercel shows at your domain registrar.
