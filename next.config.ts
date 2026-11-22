@@ -11,6 +11,18 @@ const nextConfig: NextConfig = {
     deviceSizes: [390, 640, 828, 1080, 1440, 1920],
   },
   poweredByHeader: false,
+  // The storefront is the approved static design in public/store; it replaces the old landing page.
+  async rewrites() {
+    return { beforeFiles: [{ source: "/", destination: "/store/index.html" }], afterFiles: [], fallback: [] };
+  },
+  async redirects() {
+    return [{ source: "/en", destination: "/?lang=en", permanent: false }];
+  },
+  async headers() {
+    return [
+      { source: "/store/:file(.*\\.(?:woff2|webp|png|jpg|mp4))", headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }] },
+    ];
+  },
 };
 
 export default nextConfig;
