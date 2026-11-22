@@ -416,7 +416,10 @@ $('#place').onclick=async()=>{const n=$('#f-name').value.trim(),p=$('#f-phone').
   const pd=p.replace(/[^0-9]/g,'').replace(/^966/,'0');if(!/^05[0-9]{8}$/.test(pd)){$('#err').textContent=t('phoneErr');$('#f-phone').focus();return}
   $('#err').textContent='';const btn=$('#place');btn.disabled=true;const lbl=btn.textContent;btn.textContent=t('going');
   try{const r=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lang,items:items().map(i=>({f:i.f.k,s:i.s,n:i.n})),name:n,phone:pd,city:$('#f-city').value,district:$('#f-dist').value.trim(),address:a,location:loc,note:$('#f-note').value.trim(),pay:$('input[name=pay]:checked').value})});
-    const d=await r.json().catch(()=>({}));if(!r.ok||!d.url)throw new Error(d.error||'x');location.href=d.url}
+    const d=await r.json().catch(()=>({}));if(r.status===503&&d.error==='payments_not_configured'){const s0=sum(),sh=ship(s0),ml=lang==='ar'?'مل':'ml',cur=lang==='ar'?'ر.س':'SAR';
+      const lines=[t('msg'),...items().map(i=>`• ${i.f[lang]} ${i.s}${ml} × ${i.n}`),`${t('sub')}: ${s0} ${cur}`,`${t('ship')}: ${sh?sh+' '+cur:t('free')}`,`${t('total')}: ${s0+sh} ${cur}`,'',n,pd,[$('#f-city').value,$('#f-dist').value.trim(),a].filter(Boolean).join('، '),loc,$('#f-note').value.trim()].filter(x=>x!==undefined&&x!==null);
+      location.href='https://wa.me/966552228689?text='+encodeURIComponent(lines.join('\n').replace(/\n{3,}/g,'\n\n').trim());return}
+    if(!r.ok||!d.url)throw new Error(d.error||'x');location.href=d.url}
   catch(e){$('#err').textContent=t('payErr');btn.disabled=false;btn.textContent=lbl}};
 $$('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const el=$(a.getAttribute('href'));if(!el)return;e.preventDefault();lenis?lenis.scrollTo(el,{duration:1.8}):el.scrollIntoView({behavior:'smooth'})}));
 
