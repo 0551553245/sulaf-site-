@@ -40,7 +40,7 @@ export async function GET(req: Request) {
         total: "Paid",
         sar: "SAR",
         wa: "Message us on WhatsApp",
-        back: paid ? "Back to Sulaf" : "Try again",
+        back: paid ? "Back to Sulav" : "Try again",
       }
     : {
         title: paid ? "شكراً لك، وصلنا طلبك." : "ما اكتمل الدفع.",
@@ -55,11 +55,11 @@ export async function GET(req: Request) {
       };
 
   const waText = paid
-    ? `مرحباً سُلاف، دفعت طلبي.\n${T.ref}: ${m.order_ref || inv?.id}\n${m.items || ""}\n${m.name || ""} ${m.phone || ""}`
+    ? `مرحباً سُلاف، دفعت طلبي.\n${T.ref}: ${m.order_ref || inv?.id}\n${m.items || ""}\n${m.name || ""} ${m.phone || ""}${m.location ? "\n" + m.location : ""}`
     : "مرحباً سُلاف، واجهتني مشكلة في الدفع.";
   const wa = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(waText)}`;
 
-  const html = `<!doctype html><html lang="${en ? "en" : "ar"}" dir="${en ? "ltr" : "rtl"}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>${esc(T.title)} | Sulaf</title><link rel="icon" href="/favicon.ico">
+  const html = `<!doctype html><html lang="${en ? "en" : "ar"}" dir="${en ? "ltr" : "rtl"}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>${esc(T.title)} | Sulav</title><link rel="icon" href="/favicon.ico">
 <style>
 @font-face{font-family:"Muna";src:url(/store/a-b7ac5f956a.woff2) format("woff2");font-weight:400}
 @font-face{font-family:"Muna";src:url(/store/a-9c09b2f0d5.woff2) format("woff2");font-weight:900}
