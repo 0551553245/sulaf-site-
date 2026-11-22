@@ -168,7 +168,7 @@ html[dir="ltr"] .drawer{transform:translateX(102%)}
 .tot{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px;font-weight:900;font-size:19px;color:var(--forest)}
 .tot b{font-family:var(--lat);font-size:32px}
 .d-foot .btn{width:100%}
-.co{position:fixed;inset:0;z-index:230;background:var(--cream);overflow-y:auto;clip-path:inset(100% 0 0 0);transition:clip-path .85s var(--ease);visibility:hidden;text-align:start;padding-top:env(safe-area-inset-top,0px)}
+.co{position:fixed;inset:0;z-index:230;background:var(--cream);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;clip-path:inset(100% 0 0 0);transition:clip-path .85s var(--ease);visibility:hidden;text-align:start;padding-top:env(safe-area-inset-top,0px)}
 .co.on{clip-path:inset(0 0 0 0);visibility:visible}
 .co-top{display:flex;justify-content:space-between;align-items:center;height:88px}
 .co-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:64px;padding:16px 0 90px}
@@ -267,13 +267,13 @@ html[dir="ltr"] .drawer{transform:translateX(102%)}
 </main>
 
 <div class="scrim" id="scrim"></div>
-<aside class="drawer" id="drawer" aria-label="Cart" aria-hidden="true">
+<aside class="drawer" id="drawer" data-lenis-prevent aria-label="Cart" aria-hidden="true">
   <div class="d-head"><h2 data-t="cart">السلة</h2><button class="x" type="button" id="dX" aria-label="Close">✕</button></div>
   <div class="d-body" id="dBody"></div>
   <div class="d-foot"><div class="tot"><span data-t="total">المجموع</span><span><b id="dTot">0</b> <span data-t="sar">ر.س</span></span></div><button class="btn" type="button" id="toCo" data-t="checkout">إتمام الطلب</button></div>
 </aside>
 
-<section class="co" id="co" aria-label="Checkout" aria-hidden="true">
+<section class="co" id="co" data-lenis-prevent aria-label="Checkout" aria-hidden="true">
   <div class="container">
     <div class="co-top"><svg class="logo" viewBox="0 0 116 100" aria-hidden="true"><rect width="116" height="100" mask="url(#mLogo)"/></svg><button class="x" type="button" id="coX" aria-label="Close">✕</button></div>
     <div id="coForm" class="co-grid">
@@ -407,9 +407,9 @@ $('#toCo').onclick=()=>{if(!items().length)return;closeD();$('#coForm').hidden=f
 $('#coX').onclick=()=>{show($('#co'),false);lock(false)};
 addEventListener('keydown',e=>{if(e.key==='Escape'){if($('#co').classList.contains('on'))$('#coX').click();else closeD()}});
 let loc='';
-$('#locate').onclick=()=>{const b=$('#locate span');if(!navigator.geolocation){$('#err').textContent=t('locErr');return}b.textContent=t('locating');
-  navigator.geolocation.getCurrentPosition(p=>{loc=`https://maps.google.com/?q=${p.coords.latitude.toFixed(6)},${p.coords.longitude.toFixed(6)}`;b.textContent=t('located');$('#err').textContent=''},
-  ()=>{loc='';b.textContent=t('locate');$('#err').textContent=t('locErr')},{enableHighAccuracy:true,timeout:15000,maximumAge:60000})};
+$('#locate').onclick=()=>{const b=$('#locate span');if(!navigator.geolocation){$('#err').textContent=t('locErr');return}b.textContent=t('locating');const wd=setTimeout(()=>{if(b.textContent===t('locating')){b.textContent=t('locate');$('#err').textContent=t('locErr')}},12000);
+  navigator.geolocation.getCurrentPosition(p=>{clearTimeout(wd);loc=`https://maps.google.com/?q=${p.coords.latitude.toFixed(6)},${p.coords.longitude.toFixed(6)}`;b.textContent=t('located');$('#err').textContent=''},
+  ()=>{clearTimeout(wd);loc='';b.textContent=t('locate');$('#err').textContent=t('locErr')},{enableHighAccuracy:false,timeout:10000,maximumAge:300000})};
 $('#place').onclick=async()=>{const n=$('#f-name').value.trim(),p=$('#f-phone').value.trim(),a=$('#f-addr').value.trim();
   if(!items().length){$('#err').textContent=t('errEmpty');return}
   if(!n||!p||!a){$('#err').textContent=t('err');(!n?$('#f-name'):!p?$('#f-phone'):$('#f-addr')).focus();return}
