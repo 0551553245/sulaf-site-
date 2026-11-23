@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { MOYASAR_API, WHATSAPP, moyasarKey, unsign } from "@/lib/shop";
+import { orderSecret, rpc } from "@/lib/db";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -27,6 +28,13 @@ export async function GET(req: Request) {
   const id = unsign(jar.get("sulaf_order")?.value) || url.searchParams.get("invoice_id") || url.searchParams.get("id");
   const inv = id ? await fetchInvoice(id) : null;
   const paid = inv?.status === "paid";
+  if (inv && (paid || ["failed", "canceled", "expired"].includes(inv.status))) {
+    try {
+      await rpc("mark_invoice", { p_invoice: inv.id, p_paid: paid, p_secret: orderSecret() });
+    } catch (e) {
+      console.error("mark_invoice failed (is ORDER_SECRET set?)", e);
+    }
+  }
   const m = inv?.metadata || {};
   const en = m.lang === "en";
 

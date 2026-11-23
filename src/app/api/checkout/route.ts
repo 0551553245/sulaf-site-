@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { randomBytes } from "node:crypto";
-import { MOYASAR_API, SITE_URL, cleanLines, clip, describe, moyasarKey, sign, totals } from "@/lib/shop";
+import { MOYASAR_API, SITE_URL, cleanLines, clip, describe, sign } from "@/lib/shop";
+import { DbError, OrderTotals, orderSecret, rpc } from "@/lib/db";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -22,21 +22,13 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "invalid_order" }, { status: 400 });
   }
 
-  let auth: string;
-  try {
-    auth = moyasarKey();
-  } catch {
-    return NextResponse.json({ error: "payments_not_configured" }, { status: 503 });
-  }
+  const moyasar = process.env.MOYASAR_SECRET_KEY;
+  const channel = moyasar ? "online" : "whatsapp";
+  // A signed-in customer's token links the order to their account.
+  const userToken = (req.headers.get("authorization") || "").replace(/^Bearer\s+/i, "") || null;
 
-  const { subtotal, shipping, total } = totals(lines);
-  const ref = "SL-" + Date.now().toString(36).toUpperCase() + randomBytes(2).toString("hex").toUpperCase();
-
-  const metadata: Record<string, string> = {
-    order_ref: ref,
-    items: clip(describe(lines, "ar"), 250),
-    subtotal: String(subtotal),
-    shipping: String(shipping),
+  const payload = {
+    items: lines,
     name,
     phone,
     city: clip(body.city, 60),
@@ -46,15 +38,49 @@ export async function POST(req: Request) {
     note: clip(body.note, 250),
     lang,
   };
+
+  let order: OrderTotals;
+  try {
+    const rows = await rpc<OrderTotals[]>("create_order", { p: payload, p_channel: channel }, userToken);
+    order = rows[0];
+  } catch (e) {
+    // An expired customer session should not block the order: retry as a guest.
+    if (userToken && e instanceof DbError && e.status === 401) {
+      try {
+        order = (await rpc<OrderTotals[]>("create_order", { p: payload, p_channel: channel }))[0];
+      } catch (e2) {
+        console.error("create_order failed", e2 instanceof DbError ? e2.body : e2);
+        return NextResponse.json({ error: "order_failed" }, { status: 502 });
+      }
+    } else {
+      console.error("create_order failed", e instanceof DbError ? e.body : e);
+      return NextResponse.json({ error: "order_failed" }, { status: 502 });
+    }
+  }
+
+  if (channel === "whatsapp") {
+    return NextResponse.json({ whatsapp: true, ...order });
+  }
+
+  const metadata: Record<string, string> = {
+    order_ref: order.ref,
+    items: clip(describe(lines, "ar"), 250),
+    name,
+    phone,
+    city: payload.city,
+    address,
+    location: payload.location,
+    lang,
+  };
   for (const k of Object.keys(metadata)) if (!metadata[k]) delete metadata[k];
 
   const res = await fetch(`${MOYASAR_API}/invoices`, {
     method: "POST",
-    headers: { Authorization: auth, "Content-Type": "application/json" },
+    headers: { Authorization: "Basic " + Buffer.from(moyasar + ":").toString("base64"), "Content-Type": "application/json" },
     body: JSON.stringify({
-      amount: total * 100, // halalas
+      amount: order.total * 100, // halalas
       currency: "SAR",
-      description: `سُلاف ${ref}: ${describe(lines, "ar")}`.slice(0, 250),
+      description: `سُلاف ${order.ref}: ${describe(lines, "ar")}`.slice(0, 250),
       success_url: `${SITE_URL}/api/payment/return`,
       back_url: `${SITE_URL}/`,
       metadata,
@@ -64,6 +90,12 @@ export async function POST(req: Request) {
   if (!res.ok || !inv?.id || !inv?.url) {
     console.error("moyasar invoice failed", res.status, inv);
     return NextResponse.json({ error: "gateway_error" }, { status: 502 });
+  }
+
+  try {
+    await rpc("attach_invoice", { p_ref: order.ref, p_invoice: String(inv.id), p_secret: orderSecret() });
+  } catch (e) {
+    console.error("attach_invoice failed (is ORDER_SECRET set?)", e instanceof DbError ? e.body : e);
   }
 
   const out = NextResponse.json({ url: inv.url });

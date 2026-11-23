@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   // The storefront is the approved static design in public/store; it replaces the old landing page.
   async rewrites() {
-    return { beforeFiles: [{ source: "/", destination: "/store/index.html" }, { source: "/policies", destination: "/store/policies.html" }], afterFiles: [], fallback: [] };
+    return { beforeFiles: [{ source: "/", destination: "/store/index.html" }, { source: "/policies", destination: "/store/policies.html" }, { source: "/admin", destination: "/store/admin.html" }], afterFiles: [], fallback: [] };
   },
   async redirects() {
     return [{ source: "/en", destination: "/?lang=en", permanent: false }];

@@ -53,13 +53,30 @@ html[dir="ltr"] .btn::before{transform-origin:left}
 .logo rect{fill:currentColor}
 .hdr .lang{justify-self:start;font-family:var(--lat);font-weight:700;font-size:17px;color:var(--forest);height:44px;padding:0 4px;transition:color .5s}
 html[lang="en"] .hdr .lang{font-family:var(--ar)}
-.cart-b{justify-self:end;position:relative;display:flex;align-items:center;gap:10px;height:48px;padding:0 18px;background:var(--forest);color:var(--cream);font-weight:700;box-shadow:0 8px 24px rgba(31,38,34,.18)}
+.hdr-end{justify-self:end;display:flex;align-items:center;gap:8px}
+.acct-b{width:48px;height:48px;display:grid;place-items:center;background:var(--cream);color:var(--forest);border:2px solid var(--forest);box-shadow:0 8px 24px rgba(31,38,34,.12);position:relative}
+.acct-b svg{width:20px;height:20px}
+.acct-b.in::after{content:"";position:absolute;top:6px;inset-inline-end:6px;width:9px;height:9px;border-radius:50%;background:#3d8b5a}
+.acct .d-body{padding:22px 24px}
+.acct p.lead{font-size:17px;margin:0 0 22px}
+.oauth{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:56px;margin-bottom:10px;border:2px solid var(--forest);background:#fff;color:var(--ink);font-weight:700;font-size:17px}
+.oauth svg{width:20px;height:20px}
+.or{display:flex;align-items:center;gap:12px;margin:18px 0;color:#6b6a5f;font-size:14px}
+.or::before,.or::after{content:"";flex:1;height:1px;background:rgba(52,64,56,.3)}
+.acct .f input{width:100%}
+.acct .msg{min-height:24px;margin-top:12px;font-size:15px}
+.acct .btn{width:100%;margin-top:12px}
+.my-o{border-top:1px solid rgba(52,64,56,.25);padding:14px 0}
+.my-o .r1{display:flex;justify-content:space-between;font-weight:900}
+.my-o .r2{font-size:14px;color:#6b6a5f}
+.co-login{display:inline-block;margin-top:14px;font-size:16px;color:var(--forest);text-decoration:underline;background:none}
+.cart-b{position:relative;display:flex;align-items:center;gap:10px;height:48px;padding:0 18px;background:var(--forest);color:var(--cream);font-weight:700;box-shadow:0 8px 24px rgba(31,38,34,.18)}
 .cart-b svg{width:20px;height:20px}
 .cart-b .n{font-family:var(--lat);min-width:14px}
 .hdr{transition:background .4s}
 .hdr.solid{background:rgba(243,236,221,.94);backdrop-filter:blur(8px);box-shadow:0 1px 0 rgba(52,64,56,.12)}
 .hdr.on-dark .logo,.hdr.on-dark .lang{color:var(--cream)}
-@media(max-width:767px){.hdr-in{height:72px}.logo{width:64px;height:55px}.cart-b{height:44px;padding:0 14px}}
+@media(max-width:767px){.hdr-in{height:72px}.logo{width:64px;height:55px}.cart-b{height:44px;padding:0 14px}.acct-b{width:44px;height:44px}}
 
 /* ===== film (pinned scroll sequence) ===== */
 .film{position:relative;height:520vh;background:#d9c3a0}
@@ -205,6 +222,7 @@ html[dir="ltr"] .drawer{transform:translateX(102%)}
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
   <mask id="mLogo" maskContentUnits="objectBoundingBox"><image href="/store/a-f3a6feb8c2.png" width="1" height="1" preserveAspectRatio="none"/></mask>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c1.4-4 4.4-6 8-6s6.6 2 8 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
   <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
   <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3Z"/></symbol>
   <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.5" fill="currentColor"/></symbol>
@@ -214,7 +232,7 @@ html[dir="ltr"] .drawer{transform:translateX(102%)}
   <div class="container hdr-in">
     <button class="lang" id="lang" type="button">EN</button>
     <a href="#top" aria-label="Sulav"><svg class="logo" viewBox="0 0 116 100" aria-hidden="true"><rect width="116" height="100" mask="url(#mLogo)"/></svg></a>
-    <button class="cart-b" id="cartBtn" type="button" aria-label="Cart"><svg aria-hidden="true"><use href="#i-bag"/></svg><span class="n" id="cartN">0</span></button>
+    <div class="hdr-end"><button class="acct-b" id="acctBtn" type="button" aria-label="Account"><svg aria-hidden="true"><use href="#i-user"/></svg></button><button class="cart-b" id="cartBtn" type="button" aria-label="Cart"><svg aria-hidden="true"><use href="#i-bag"/></svg><span class="n" id="cartN">0</span></button></div>
   </div>
 </header>
 
@@ -272,6 +290,28 @@ html[dir="ltr"] .drawer{transform:translateX(102%)}
   <div class="d-body" id="dBody"></div>
   <div class="d-foot"><div class="tot"><span data-t="total">المجموع</span><span><b id="dTot">0</b> <span data-t="sar">ر.س</span></span></div><button class="btn" type="button" id="toCo" data-t="checkout">إتمام الطلب</button></div>
 </aside>
+<aside class="drawer acct" id="acct" data-lenis-prevent aria-label="Account" aria-hidden="true">
+  <div class="d-head"><h2 data-t="acct">حسابي</h2><button class="x" type="button" id="aX" aria-label="Close">✕</button></div>
+  <div class="d-body">
+    <div id="aOut">
+      <p class="lead" data-t="a_lead">سجّل دخولك عشان نحفظ عنوانك، وتتابع طلباتك.</p>
+      <button class="oauth" type="button" id="aGoogle" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23 12.3c0-.8-.1-1.6-.2-2.3H12v4.4h6.2a5.3 5.3 0 0 1-2.3 3.5v2.9h3.7c2.2-2 3.4-5 3.4-8.5Z"/><path fill="#34A853" d="M12 23.5c3.1 0 5.7-1 7.6-2.8l-3.7-2.9c-1 .7-2.4 1.1-3.9 1.1-3 0-5.5-2-6.4-4.7H1.8v3a11.5 11.5 0 0 0 10.2 6.3Z"/><path fill="#FBBC05" d="M5.6 14.2a6.9 6.9 0 0 1 0-4.4v-3H1.8a11.5 11.5 0 0 0 0 10.4l3.8-3Z"/><path fill="#EA4335" d="M12 4.6c1.7 0 3.2.6 4.4 1.7l3.3-3.3A11.5 11.5 0 0 0 1.8 6.8l3.8 3c.9-2.8 3.4-5.2 6.4-5.2Z"/></svg><span data-t="a_google">المتابعة بحساب Google</span></button>
+      <button class="oauth" type="button" id="aApple" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.4 12.6c0-2.6 2.1-3.8 2.2-3.9a4.8 4.8 0 0 0-3.8-2c-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8 1.6 0 2 .8 3.4.8 1.4 0 2.3-1.3 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9-.1 0-2.6-1-2.6-4.1ZM13.8 4.9c.7-.9 1.2-2 1-3.2-1 .1-2.3.7-3 1.6-.7.8-1.3 2-1.1 3.1 1.2.1 2.3-.6 3.1-1.5Z"/></svg><span data-t="a_apple">المتابعة بحساب Apple</span></button>
+      <div class="or" id="aOr" hidden><span data-t="a_or">أو بالإيميل</span></div>
+      <form id="aForm" novalidate>
+        <label class="f"><span data-t="a_email">الإيميل</span><input id="aEmail" type="email" inputmode="email" autocomplete="email" dir="ltr" placeholder="name@email.com"></label>
+        <button class="btn" type="submit" id="aSend" data-t="a_send">أرسل لي رابط الدخول</button>
+      </form>
+      <p class="msg" id="aMsg" role="status"></p>
+    </div>
+    <div id="aIn" hidden>
+      <p class="lead"><span data-t="a_hi">أهلاً</span> <b id="aWho"></b></p>
+      <h3 data-t="a_orders" style="font-weight:900;color:var(--forest);font-size:22px;margin:24px 0 4px">طلباتي</h3>
+      <div id="aOrders"></div>
+      <button class="btn" type="button" id="aOutBtn" data-t="a_logout" style="background:transparent;color:var(--forest);border:2px solid var(--forest);margin-top:26px">تسجيل الخروج</button>
+    </div>
+  </div>
+</aside>
 
 <section class="co" id="co" data-lenis-prevent aria-label="Checkout" aria-hidden="true">
   <div class="container">
@@ -279,6 +319,7 @@ html[dir="ltr"] .drawer{transform:translateX(102%)}
     <div id="coForm" class="co-grid">
       <form id="form" novalidate>
         <h2 class="disp" data-t="co_h">إتمام الطلب</h2>
+        <button type="button" class="co-login" id="coLogin" data-t="co_login">عندك حساب؟ سجّل دخولك وتنعبى بياناتك.</button>
         <fieldset class="fs"><legend data-t="co_1">بياناتك</legend>
           <div class="g2">
             <label class="f"><span data-t="f_name">الاسم</span><input id="f-name" autocomplete="name"></label>
@@ -360,8 +401,8 @@ const F=[
  {k:'pine',ar:'أناناس',en:'Pineapple',tar:'حلاوة استوائية مشرقة',ten:'Bright, tropical sweetness'},
  {k:'lemon',ar:'ليمون وزنجبيل',en:'Lemon & Ginger',tar:'ليمون منعش ولسعة زنجبيل',ten:'Fresh lemon with a ginger kick'}];
 const T={
- ar:{s0:'كمبوتشا سعودية، على مهل.',s1h:'يبدأ بالشاي.',s1p:'شاي أسود، نجهّزه طازج لكل دفعة.',s2h:'ونعطيه وقته.',s2p:'ما نستعجل. كل دفعة تاخذ وقتها كامل.',s3h:'وأخيراً، العصير الطبيعي.',s3p:'عنب، زنجبيل، أناناس، وليمون.',s3b:'اختر نكهتك',s4h:'سُلاف.',s4p:'أربع نكهات، بقارورة زجاج كهرماني.',cue:'مرّر للأسفل',sh_k:'اختر نكهتك',sh_h:'نكهاتنا الأربع',size:'الحجم',ml:'مل',sar:'ر.س',add:'أضف للسلة',added:'أُضيفت ✓',hint:'اضغط على القارورة لإضافتها للسلة',f_h:'للطلبات التجارية، راسلنا.',f_btn:'راسلنا على واتساب',c1:'واتساب',c2:'الإيميل',c3:'السجل التجاري',c4:'الرقم الضريبي',rights:'© 2026 سُلاف. جميع الحقوق محفوظة.',pol:'السياسات: الاسترجاع والشحن والخصوصية',made:'صناعة سعودية',cart:'السلة',total:'المجموع',checkout:'إتمام الطلب',empty:'سلتك فاضية.',co_h:'إتمام الطلب',co_1:'بياناتك',co_2:'عنوان التوصيل',co_3:'طريقة الدفع',f_name:'الاسم',f_phone:'رقم الجوال',f_city:'المدينة',f_dist:'الحي',f_addr:'الشارع ورقم المبنى، أو العنوان الوطني',locate:'حدد موقعي على الخريطة',locErr:'ما قدرنا نحدد موقعك. فعّل خدمة الموقع للمتصفح، أو اكتب العنوان.',locating:'جاري تحديد موقعك…',located:'تم تحديد الموقع ✓',f_note:'ملاحظات للمندوب (اختياري)',p_mada:'مدى',p_card:'بطاقة ائتمانية',sub:'المجموع الفرعي',free:'توصيل مجاني',freeLeft:n=>`باقي ${n} ر.س وتوصيلك مجاني.`,freeOk:'توصيلك مجاني.',going:'جاري تحويلك لصفحة الدفع…',payErr:'صار خطأ في الدفع. جرّب مرة ثانية أو راسلنا على واتساب.',phoneErr:'اكتب رقم جوال سعودي صحيح، مثل 05xxxxxxxx.',sum:'ملخص الطلب',ship:'التوصيل',place:'تأكيد الطلب',demo:'الدفع آمن عبر ميسّر. توصيل لجميع مدن المملكة بـ35 ر.س، ومجاني للطلبات من 100 ر.س.',d_h:'شكراً لك.',d_p:'اضغط الزر تحت عشان يوصلنا الطلب على واتساب، ونأكد معك موعد التوصيل.',d_btn:'أرسل الطلب على واتساب',other:'أخرى',err:'اكتب الاسم ورقم الجوال والعنوان.',errEmpty:'السلة فاضية.',msg:'مرحباً سُلاف، طلب جديد:',pays:{apple:'Apple Pay',mada:'مدى',card:'بطاقة',cod:'عند الاستلام'}},
- en:{s0:'Saudi kombucha, made slowly.',s1h:'It starts with tea.',s1p:'Black tea, freshly brewed for every batch.',s2h:'Then we give it time.',s2p:'No rushing. Every batch gets all the time it needs.',s3h:'Finally, natural juice.',s3p:'Grape, ginger, pineapple and lemon.',s3b:'Pick your flavor',s4h:'Sulav.',s4p:'Four flavors, in amber glass bottles.',cue:'Scroll down',sh_k:'Pick your flavor',sh_h:'Our four flavors',size:'Size',ml:'ml',sar:'SAR',add:'Add to cart',added:'Added ✓',hint:'Tap a bottle to add it to your cart',f_h:'For business orders, message us.',f_btn:'Message us on WhatsApp',c1:'WhatsApp',c2:'Email',c3:'Commercial reg.',c4:'VAT number',rights:'© 2026 Sulav. All rights reserved.',pol:'Policies: returns, shipping & privacy',made:'Made in Saudi Arabia',cart:'Cart',total:'Total',checkout:'Checkout',empty:'Your cart is empty.',co_h:'Checkout',co_1:'Your details',co_2:'Delivery address',co_3:'Payment',f_name:'Name',f_phone:'Mobile number',f_city:'City',f_dist:'District',f_addr:'Street and building, or national address',locate:'Pin my location on the map',locErr:'We could not get your location. Allow location access in your browser, or type the address.',locating:'Finding your location…',located:'Location set ✓',f_note:'Notes for the driver (optional)',p_mada:'mada',p_card:'Credit card',sub:'Subtotal',free:'Free',freeLeft:n=>`Add ${n} SAR more for free delivery.`,freeOk:'Your delivery is free.',going:'Taking you to payment…',payErr:'Something went wrong with the payment. Try again or message us on WhatsApp.',phoneErr:'Enter a valid Saudi mobile number, e.g. 05xxxxxxxx.',sum:'Order summary',ship:'Delivery',place:'Place order',demo:'Secure payment by Moyasar. Delivery across Saudi Arabia for 35 SAR, free on orders from 100 SAR.',d_h:'Thank you.',d_p:'Tap below to send the order on WhatsApp, and we will confirm the delivery time with you.',d_btn:'Send order on WhatsApp',other:'Other',err:'Enter your name, mobile number and address.',errEmpty:'Your cart is empty.',msg:'Hello Sulav, new order:',pays:{apple:'Apple Pay',mada:'mada',card:'Card',cod:'Cash on delivery'}}};
+ ar:{s0:'كمبوتشا سعودية، على مهل.',s1h:'يبدأ بالشاي.',s1p:'شاي أسود، نجهّزه طازج لكل دفعة.',s2h:'ونعطيه وقته.',s2p:'ما نستعجل. كل دفعة تاخذ وقتها كامل.',s3h:'وأخيراً، العصير الطبيعي.',s3p:'عنب، زنجبيل، أناناس، وليمون.',s3b:'اختر نكهتك',s4h:'سُلاف.',s4p:'أربع نكهات، بقارورة زجاج كهرماني.',cue:'مرّر للأسفل',sh_k:'اختر نكهتك',sh_h:'نكهاتنا الأربع',size:'الحجم',ml:'مل',sar:'ر.س',add:'أضف للسلة',added:'أُضيفت ✓',hint:'اضغط على القارورة لإضافتها للسلة',f_h:'للطلبات التجارية، راسلنا.',f_btn:'راسلنا على واتساب',c1:'واتساب',c2:'الإيميل',c3:'السجل التجاري',c4:'الرقم الضريبي',rights:'© 2026 سُلاف. جميع الحقوق محفوظة.',pol:'السياسات: الاسترجاع والشحن والخصوصية',acct:'حسابي',a_lead:'سجّل دخولك عشان نحفظ عنوانك، وتتابع طلباتك.',a_google:'المتابعة بحساب Google',a_apple:'المتابعة بحساب Apple',a_or:'أو بالإيميل',a_email:'الإيميل',a_send:'أرسل لي رابط الدخول',a_sent:'أرسلنا رابط الدخول على إيميلك. افتحه من نفس الجهاز.',a_bad:'اكتب إيميل صحيح.',a_fail:'ما قدرنا نرسل الرابط الحين. جرّب بعد شوي، أو ادخل بحساب Google.',a_hi:'أهلاً',a_orders:'طلباتي',a_none:'ما عندك طلبات للحين.',a_logout:'تسجيل الخروج',co_login:'عندك حساب؟ سجّل دخولك وتنعبى بياناتك.',co_in:'مسجّل دخول باسم',o_new:'جديد',o_delivering:'قيد التوصيل',o_delivered:'تم التوصيل',o_cancelled:'ملغي',o_pending:'بانتظار الدفع',o_failed:'ما اكتمل الدفع',made:'صناعة سعودية',cart:'السلة',total:'المجموع',checkout:'إتمام الطلب',empty:'سلتك فاضية.',co_h:'إتمام الطلب',co_1:'بياناتك',co_2:'عنوان التوصيل',co_3:'طريقة الدفع',f_name:'الاسم',f_phone:'رقم الجوال',f_city:'المدينة',f_dist:'الحي',f_addr:'الشارع ورقم المبنى، أو العنوان الوطني',locate:'حدد موقعي على الخريطة',locErr:'ما قدرنا نحدد موقعك. فعّل خدمة الموقع للمتصفح، أو اكتب العنوان.',locating:'جاري تحديد موقعك…',located:'تم تحديد الموقع ✓',f_note:'ملاحظات للمندوب (اختياري)',p_mada:'مدى',p_card:'بطاقة ائتمانية',sub:'المجموع الفرعي',free:'توصيل مجاني',freeLeft:n=>`باقي ${n} ر.س وتوصيلك مجاني.`,freeOk:'توصيلك مجاني.',going:'جاري تحويلك لصفحة الدفع…',payErr:'صار خطأ في الدفع. جرّب مرة ثانية أو راسلنا على واتساب.',phoneErr:'اكتب رقم جوال سعودي صحيح، مثل 05xxxxxxxx.',sum:'ملخص الطلب',ship:'التوصيل',place:'تأكيد الطلب',demo:'الدفع آمن عبر ميسّر. توصيل لجميع مدن المملكة بـ35 ر.س، ومجاني للطلبات من 100 ر.س.',d_h:'شكراً لك.',d_p:'اضغط الزر تحت عشان يوصلنا الطلب على واتساب، ونأكد معك موعد التوصيل.',d_btn:'أرسل الطلب على واتساب',other:'أخرى',err:'اكتب الاسم ورقم الجوال والعنوان.',errEmpty:'السلة فاضية.',msg:'مرحباً سُلاف، طلب جديد:',pays:{apple:'Apple Pay',mada:'مدى',card:'بطاقة',cod:'عند الاستلام'}},
+ en:{s0:'Saudi kombucha, made slowly.',s1h:'It starts with tea.',s1p:'Black tea, freshly brewed for every batch.',s2h:'Then we give it time.',s2p:'No rushing. Every batch gets all the time it needs.',s3h:'Finally, natural juice.',s3p:'Grape, ginger, pineapple and lemon.',s3b:'Pick your flavor',s4h:'Sulav.',s4p:'Four flavors, in amber glass bottles.',cue:'Scroll down',sh_k:'Pick your flavor',sh_h:'Our four flavors',size:'Size',ml:'ml',sar:'SAR',add:'Add to cart',added:'Added ✓',hint:'Tap a bottle to add it to your cart',f_h:'For business orders, message us.',f_btn:'Message us on WhatsApp',c1:'WhatsApp',c2:'Email',c3:'Commercial reg.',c4:'VAT number',rights:'© 2026 Sulav. All rights reserved.',pol:'Policies: returns, shipping & privacy',acct:'My account',a_lead:'Sign in so we can save your address and you can follow your orders.',a_google:'Continue with Google',a_apple:'Continue with Apple',a_or:'or with email',a_email:'Email',a_send:'Email me a sign-in link',a_sent:'We sent a sign-in link to your email. Open it on this device.',a_bad:'Enter a valid email.',a_fail:'We could not send the link right now. Try again shortly, or continue with Google.',a_hi:'Hello',a_orders:'My orders',a_none:'No orders yet.',a_logout:'Sign out',co_login:'Have an account? Sign in and we fill this in for you.',co_in:'Signed in as',o_new:'New',o_delivering:'Out for delivery',o_delivered:'Delivered',o_cancelled:'Cancelled',o_pending:'Awaiting payment',o_failed:'Payment not completed',made:'Made in Saudi Arabia',cart:'Cart',total:'Total',checkout:'Checkout',empty:'Your cart is empty.',co_h:'Checkout',co_1:'Your details',co_2:'Delivery address',co_3:'Payment',f_name:'Name',f_phone:'Mobile number',f_city:'City',f_dist:'District',f_addr:'Street and building, or national address',locate:'Pin my location on the map',locErr:'We could not get your location. Allow location access in your browser, or type the address.',locating:'Finding your location…',located:'Location set ✓',f_note:'Notes for the driver (optional)',p_mada:'mada',p_card:'Credit card',sub:'Subtotal',free:'Free',freeLeft:n=>`Add ${n} SAR more for free delivery.`,freeOk:'Your delivery is free.',going:'Taking you to payment…',payErr:'Something went wrong with the payment. Try again or message us on WhatsApp.',phoneErr:'Enter a valid Saudi mobile number, e.g. 05xxxxxxxx.',sum:'Order summary',ship:'Delivery',place:'Place order',demo:'Secure payment by Moyasar. Delivery across Saudi Arabia for 35 SAR, free on orders from 100 SAR.',d_h:'Thank you.',d_p:'Tap below to send the order on WhatsApp, and we will confirm the delivery time with you.',d_btn:'Send order on WhatsApp',other:'Other',err:'Enter your name, mobile number and address.',errEmpty:'Your cart is empty.',msg:'Hello Sulav, new order:',pays:{apple:'Apple Pay',mada:'mada',card:'Card',cod:'Cash on delivery'}}};
 const t=k=>T[lang][k];
 let size=330;const cart={};
 
@@ -405,7 +446,48 @@ const closeD=()=>{show($('#drawer'),false);$('#scrim').classList.remove('on');if
 $('#cartBtn').onclick=()=>{show($('#drawer'),true);$('#scrim').classList.add('on');lock(true)};$('#dX').onclick=closeD;$('#scrim').onclick=closeD;
 $('#toCo').onclick=()=>{if(!items().length)return;closeD();$('#coForm').hidden=false;$('#done').hidden=true;show($('#co'),true);lock(true);$('#co').scrollTop=0};
 $('#coX').onclick=()=>{show($('#co'),false);lock(false)};
-addEventListener('keydown',e=>{if(e.key==='Escape'){if($('#co').classList.contains('on'))$('#coX').click();else closeD()}});
+/* ---------- customer account (Supabase Auth) ---------- */
+const SB_URL='https://xuyhfwtqvolykgyyueve.supabase.co',SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh1eWhmd3Rxdm9seWtneXl1ZXZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTU0MDYxMjUsImV4cCI6MjExMDk4MjEyNX0.p19HRgEpm_08Yvx2V09qYYwkvv7NajGSEg5SbR1Q5jY';
+let sb=null,user=null;
+const openA=()=>{closeD();show($('#acct'),true);$('#scrim').classList.add('on');lock(true)};
+const closeA=()=>{show($('#acct'),false);$('#scrim').classList.remove('on');if(!$('#co').classList.contains('on'))lock(false)};
+$('#acctBtn').onclick=openA;$('#aX').onclick=closeA;$('#scrim').addEventListener('click',closeA);
+$('#coLogin').onclick=()=>{show($('#co'),false);openA()};
+window.sulavToken=async()=>{if(!sb)return null;const {data}=await sb.auth.getSession();return data.session?data.session.access_token:null};
+async function fillCheckout(){if(!sb||!user)return;
+  const {data}=await sb.from('profiles').select('name,phone,city,district,address').eq('id',user.id).maybeSingle();
+  const md=user.user_metadata||{};const v={name:(data&&data.name)||md.full_name||md.name||'',phone:data&&data.phone,city:data&&data.city,district:data&&data.district,address:data&&data.address};
+  const set=(id,x)=>{const el=$(id);if(x&&!el.value)el.value=x};
+  set('#f-name',v.name);set('#f-phone',v.phone);set('#f-dist',v.district);set('#f-addr',v.address);
+  if(v.city){const s=$('#f-city');if([...s.options].some(o=>o.value===v.city))s.value=v.city}}
+async function renderAcct(){
+  $('#acctBtn').classList.toggle('in',!!user);$('#aOut').hidden=!!user;$('#aIn').hidden=!user;
+  $('#coLogin').hidden=!!user;
+  if(!user)return;
+  const md=user.user_metadata||{};$('#aWho').textContent=md.full_name||md.name||user.email||'';
+  fillCheckout();
+  const {data}=await sb.rpc('my_orders');const os=data||[];
+  $('#aOrders').innerHTML=os.length?os.map(o=>{const st=o.payment_status==='pending'?t('o_pending'):o.payment_status==='failed'?t('o_failed'):t('o_'+o.status);
+    const d=new Date(o.created_at).toLocaleDateString(lang==='ar'?'ar-SA-u-nu-latn':'en-GB',{timeZone:'Asia/Riyadh',day:'numeric',month:'short',year:'numeric'});
+    const its=(o.items||[]).map(i=>`${lang==='ar'?i.name:(F.find(f=>f.k===i.f)||{en:i.name}).en} ${i.s}${lang==='ar'?'مل':'ml'} ×${i.n}`).join('، ');
+    return `<div class="my-o"><div class="r1"><span>${d}</span><span><span class="mono">${o.total}</span> ${t('sar')}</span></div><div class="r2">${st} · <span class="mono">${o.ref}</span></div><div class="r2">${its}</div></div>`}).join(''):`<p class="r2">${t('a_none')}</p>`}
+function initAuth(){
+  if(!window.supabase)return;
+  sb=window.supabase.createClient(SB_URL,SB_KEY,{auth:{flowType:'pkce',detectSessionInUrl:true,persistSession:true}});
+  sb.auth.onAuthStateChange((ev,s)=>{const was=!!user;user=s?s.user:null;renderAcct();
+    if(ev==='SIGNED_IN'&&!was&&/[?&]code=/.test(location.search)){history.replaceState(null,'',location.pathname);openA()}});
+  fetch(SB_URL+'/auth/v1/settings',{headers:{apikey:SB_KEY}}).then(r=>r.json()).then(s=>{const e=s.external||{};
+    $('#aGoogle').hidden=!e.google;$('#aApple').hidden=!e.apple;$('#aOr').hidden=!(e.google||e.apple);$('#aForm').hidden=e.email===false}).catch(()=>{});
+  const oauth=p=>sb.auth.signInWithOAuth({provider:p,options:{redirectTo:location.origin+'/'}});
+  $('#aGoogle').onclick=()=>oauth('google');$('#aApple').onclick=()=>oauth('apple');
+  $('#aForm').onsubmit=async e=>{e.preventDefault();const em=$('#aEmail').value.trim(),m=$('#aMsg');
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){m.textContent=t('a_bad');return}
+    $('#aSend').disabled=true;const {error}=await sb.auth.signInWithOtp({email:em,options:{emailRedirectTo:location.origin+'/'}});
+    $('#aSend').disabled=false;m.textContent=error?t('a_fail'):t('a_sent')};
+  $('#aOutBtn').onclick=async()=>{await sb.auth.signOut();user=null;renderAcct()};
+}
+(function(){const s=document.createElement('script');s.src='/store/vendor/supabase.js';s.async=true;s.onload=initAuth;document.head.appendChild(s)})();
+addEventListener('keydown',e=>{if(e.key==='Escape'){if($('#co').classList.contains('on'))$('#coX').click();else{closeD();closeA()}}});
 let loc='';
 $('#locate').onclick=()=>{const b=$('#locate span');if(!navigator.geolocation){$('#err').textContent=t('locErr');return}b.textContent=t('locating');const wd=setTimeout(()=>{if(b.textContent===t('locating')){b.textContent=t('locate');$('#err').textContent=t('locErr')}},12000);
   navigator.geolocation.getCurrentPosition(p=>{clearTimeout(wd);loc=`https://maps.google.com/?q=${p.coords.latitude.toFixed(6)},${p.coords.longitude.toFixed(6)}`;b.textContent=t('located');$('#err').textContent=''},
@@ -415,9 +497,9 @@ $('#place').onclick=async()=>{const n=$('#f-name').value.trim(),p=$('#f-phone').
   if(!n||!p||!a){$('#err').textContent=t('err');(!n?$('#f-name'):!p?$('#f-phone'):$('#f-addr')).focus();return}
   const pd=p.replace(/[^0-9]/g,'').replace(/^966/,'0');if(!/^05[0-9]{8}$/.test(pd)){$('#err').textContent=t('phoneErr');$('#f-phone').focus();return}
   $('#err').textContent='';const btn=$('#place');btn.disabled=true;const lbl=btn.textContent;btn.textContent=t('going');
-  try{const r=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lang,items:items().map(i=>({f:i.f.k,s:i.s,n:i.n})),name:n,phone:pd,city:$('#f-city').value,district:$('#f-dist').value.trim(),address:a,location:loc,note:$('#f-note').value.trim(),pay:$('input[name=pay]:checked').value})});
-    const d=await r.json().catch(()=>({}));if(r.status===503&&d.error==='payments_not_configured'){const s0=sum(),sh=ship(s0),ml=lang==='ar'?'مل':'ml',cur=lang==='ar'?'ر.س':'SAR';
-      const lines=[t('msg'),...items().map(i=>`• ${i.f[lang]} ${i.s}${ml} × ${i.n}`),`${t('sub')}: ${s0} ${cur}`,`${t('ship')}: ${sh?sh+' '+cur:t('free')}`,`${t('total')}: ${s0+sh} ${cur}`,'',n,pd,[$('#f-city').value,$('#f-dist').value.trim(),a].filter(Boolean).join('، '),loc,$('#f-note').value.trim()].filter(x=>x!==undefined&&x!==null);
+  try{const tok=window.sulavToken?await window.sulavToken():null;const r=await fetch('/api/checkout',{method:'POST',headers:Object.assign({'Content-Type':'application/json'},tok?{Authorization:'Bearer '+tok}:{}),body:JSON.stringify({lang,items:items().map(i=>({f:i.f.k,s:i.s,n:i.n})),name:n,phone:pd,city:$('#f-city').value,district:$('#f-dist').value.trim(),address:a,location:loc,note:$('#f-note').value.trim(),pay:$('input[name=pay]:checked').value})});
+    const d=await r.json().catch(()=>({}));if(d.whatsapp){const s0=d.subtotal,sh=d.shipping,ml=lang==='ar'?'مل':'ml',cur=lang==='ar'?'ر.س':'SAR';
+      const lines=[t('msg')+' '+d.ref,...items().map(i=>`• ${i.f[lang]} ${i.s}${ml} × ${i.n}`),`${t('sub')}: ${s0} ${cur}`,`${t('ship')}: ${sh?sh+' '+cur:t('free')}`,`${t('total')}: ${d.total} ${cur}`,'',n,pd,[$('#f-city').value,$('#f-dist').value.trim(),a].filter(Boolean).join('، '),loc,$('#f-note').value.trim()].filter(x=>x!==undefined&&x!==null);
       location.href='https://wa.me/966552228689?text='+encodeURIComponent(lines.join('\n').replace(/\n{3,}/g,'\n\n').trim());return}
     if(!r.ok||!d.url)throw new Error(d.error||'x');location.href=d.url}
   catch(e){$('#err').textContent=t('payErr');btn.disabled=false;btn.textContent=lbl}};
